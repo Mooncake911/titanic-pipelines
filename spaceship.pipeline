@@ -1,0 +1,279 @@
+{
+  "doc_type": "pipeline",
+  "version": "3.0",
+  "json_schema": "http://api.dataplatform.ibm.com/schemas/common-pipeline/pipeline-flow/pipeline-flow-v3-schema.json",
+  "id": "elyra-auto-generated-pipeline",
+  "primary_pipeline": "primary",
+  "pipelines": [
+    {
+      "id": "primary",
+      "nodes": [
+        {
+          "id": "ffd4a2c0-bbbb-463b-a8cc-3a5fbb3dd5f2",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [],
+              "include_subdirectories": false,
+              "outputs": [
+                "data/spaceship-titanic.zip",
+                "data/sample_submission.csv",
+                "data/test.csv",
+                "data/train.csv"
+              ],
+              "env_vars": [],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "load_data.ipynb",
+              "runtime_image": "amancevice/pandas@sha256:f74bef70689b19d3cd610ef67227fce1c9a6ed8fa950ac2aff39ce72310d5520"
+            },
+            "ui_data": {
+              "label": "load_data.ipynb",
+              "image": "/static/elyra/notebook.svg",
+              "x_pos": 63,
+              "y_pos": 180,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "b5aff2ac-295e-4d8c-9a60-843400608602",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [],
+              "include_subdirectories": false,
+              "outputs": [
+                "data/result.csv"
+              ],
+              "env_vars": [],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "filling.ipynb",
+              "runtime_image": "amancevice/pandas@sha256:f74bef70689b19d3cd610ef67227fce1c9a6ed8fa950ac2aff39ce72310d5520"
+            },
+            "label": "",
+            "ui_data": {
+              "label": "filling.ipynb",
+              "image": "/static/elyra/notebook.svg",
+              "x_pos": 287,
+              "y_pos": 180,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "b04b3a15-a6d4-41f7-a316-8c2b44f8ef11",
+                  "node_id_ref": "ffd4a2c0-bbbb-463b-a8cc-3a5fbb3dd5f2",
+                  "port_id_ref": "outPort"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "b52d4651-b6bc-4ecd-a04e-b73365b83130",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [
+                "src/dfprepare.py",
+                "src/models.py"
+              ],
+              "include_subdirectories": false,
+              "outputs": [
+                "data/output.csv"
+              ],
+              "env_vars": [
+                {
+                  "env_var": "EXPLORE_MODEL",
+                  "value": "LogisticRegression"
+                }
+              ],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "demo.ipynb",
+              "runtime_image": "amancevice/pandas@sha256:f74bef70689b19d3cd610ef67227fce1c9a6ed8fa950ac2aff39ce72310d5520"
+            },
+            "label": "",
+            "ui_data": {
+              "label": "demo.ipynb",
+              "image": "/static/elyra/notebook.svg",
+              "x_pos": 508,
+              "y_pos": 179,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "df206ea0-e946-4fd1-9d82-94181b3947be",
+                  "node_id_ref": "b5aff2ac-295e-4d8c-9a60-843400608602",
+                  "port_id_ref": "outPort"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "app_data": {
+        "ui_data": {
+          "comments": [
+            {
+              "id": "b5b5be6a-9b9c-46fa-9c23-7856a15ee314",
+              "x_pos": 30.5999755859375,
+              "y_pos": 108,
+              "width": 175,
+              "height": 33,
+              "content": "Download data",
+              "associated_id_refs": [
+                {
+                  "id": "daefcf8b-4b25-48d9-ad04-22d17c428198",
+                  "node_ref": "ffd4a2c0-bbbb-463b-a8cc-3a5fbb3dd5f2"
+                }
+              ]
+            },
+            {
+              "id": "c33acbe6-e661-4927-8de0-48dc8f026c74",
+              "x_pos": 255.5999755859375,
+              "y_pos": 104,
+              "width": 175,
+              "height": 32,
+              "content": "Fill Nan's values",
+              "associated_id_refs": [
+                {
+                  "id": "57cbef8a-fb5b-493b-8506-6827c8e6bb71",
+                  "node_ref": "b5aff2ac-295e-4d8c-9a60-843400608602"
+                }
+              ]
+            },
+            {
+              "id": "23f9505f-c52f-4ab8-ab48-fa3263dff16f",
+              "x_pos": 467,
+              "y_pos": 101,
+              "width": 175,
+              "height": 30,
+              "content": "Return output.csv",
+              "associated_id_refs": [
+                {
+                  "id": "27748b2a-4634-4e18-97cb-02a8c5ae844e",
+                  "node_ref": "b52d4651-b6bc-4ecd-a04e-b73365b83130"
+                }
+              ]
+            }
+          ]
+        },
+        "version": 8,
+        "properties": {
+          "name": "spaceship",
+          "runtime": "Generic",
+          "pipeline_defaults": {
+            "kubernetes_pod_annotations": [],
+            "kubernetes_tolerations": [],
+            "mounted_volumes": [],
+            "kubernetes_shared_mem_size": {},
+            "kubernetes_pod_labels": [],
+            "kubernetes_secrets": [],
+            "env_vars": []
+          }
+        }
+      },
+      "runtime_ref": ""
+    }
+  ],
+  "schemas": []
+}
